@@ -1,3 +1,6 @@
+
+[The clock](image.png)
+
 ## Update Jun
 - had some stuff wired wrong, fixed and in the new version
 ![schmatic](PCB/WallClockDriver_V2.svg)
