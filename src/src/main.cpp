@@ -179,7 +179,7 @@ void UpdateStateTime(UFaceBits *clock, struct tm timeinfo)
 
     switch (timeinfo.tm_min-1)
     { 
-    case -1: clock->face._12_0 = 1; break; 
+    case -1: clock->face._11_4 = 1; break; 
     case  0: clock->face._12_0 = 1; break;
     case  1: clock->face._12_1 = 1; break; 
     case  2: clock->face._12_2 = 1; break;
@@ -248,7 +248,7 @@ void UpdateStateTime(UFaceBits *clock, struct tm timeinfo)
     
     switch (timeinfo.tm_sec-1)
     { 
-    case-1: SetSec(clock->face._12_0, timeinfo.tm_min); break;
+    case-1: SetSec(clock->face._11_4, timeinfo.tm_min); break;
     case 0: SetSec(clock->face._12_0, timeinfo.tm_min); break;
     case 1: SetSec(clock->face._12_1, timeinfo.tm_min); break; 
     case 2: SetSec(clock->face._12_2, timeinfo.tm_min); break;
@@ -391,6 +391,7 @@ void loop()
 {
     // uncomment to allow for qa:sec, ws:min, ed:hr keyboard controls
     // cli_test();
+    // return;
 
     if (0 > (perotic_timer -= 1))
     {
