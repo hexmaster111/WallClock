@@ -179,16 +179,17 @@ void UpdateStateTime(UFaceBits *clock, struct tm timeinfo)
 
     switch (timeinfo.tm_min-1)
     { 
-    case 0: clock->face._12_0 = 1; break;
-    case 1: clock->face._12_1 = 1; break; 
-    case 2: clock->face._12_2 = 1; break;
-    case 3: clock->face._12_3 = 1; break;
-    case 4: clock->face._12_4 = 1; break;
-    case 5: clock->face._1_0 = 1; break;
-    case 6: clock->face._1_1 = 1; break;
-    case 7: clock->face._1_2 = 1; break;
-    case 8: clock->face._1_3 = 1; break;
-    case 9: clock->face._1_4 = 1; break;
+    case -1: clock->face._12_0 = 1; break; 
+    case  0: clock->face._12_0 = 1; break;
+    case  1: clock->face._12_1 = 1; break; 
+    case  2: clock->face._12_2 = 1; break;
+    case  3: clock->face._12_3 = 1; break;
+    case  4: clock->face._12_4 = 1; break;
+    case  5: clock->face._1_0 = 1; break;
+    case  6: clock->face._1_1 = 1; break;
+    case  7: clock->face._1_2 = 1; break;
+    case  8: clock->face._1_3 = 1; break;
+    case  9: clock->face._1_4 = 1; break;
     case 10: clock->face._2_0 = 1; break;
     case 11: clock->face._2_1 = 1; break;
     case 12: clock->face._2_2 = 1; break;
@@ -247,6 +248,7 @@ void UpdateStateTime(UFaceBits *clock, struct tm timeinfo)
     
     switch (timeinfo.tm_sec-1)
     { 
+    case-1: SetSec(clock->face._12_0, timeinfo.tm_min); break;
     case 0: SetSec(clock->face._12_0, timeinfo.tm_min); break;
     case 1: SetSec(clock->face._12_1, timeinfo.tm_min); break; 
     case 2: SetSec(clock->face._12_2, timeinfo.tm_min); break;
@@ -318,7 +320,8 @@ union UFaceBits state = {0};
 int perotic_timer = 100;
 struct tm timeinfo = {0};
 
-void cli_test(){
+void cli_test()
+{
     static int g_min = 0;
     static int g_sec = 0;
     static int g_hr = 0;
@@ -326,7 +329,8 @@ void cli_test(){
     if (Serial.available())
     {
         int cmd = Serial.read();
-        if (cmd == -1) return;
+        if (cmd == -1)
+            return;
         memset(&state, 0, sizeof(state));
         if (cmd == 'q')
         {
@@ -381,13 +385,11 @@ void cli_test(){
             WriteOut(DATA, CLOCK, LATCH, state);
         }
     }
-
 }
-
 
 void loop()
 {
-    // uncomment to allow for qa:sec, ws:min, ed:hr keyboard controls 
+    // uncomment to allow for qa:sec, ws:min, ed:hr keyboard controls
     // cli_test();
 
     if (0 > (perotic_timer -= 1))
