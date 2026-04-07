@@ -1,5 +1,7 @@
 
-[The clock](image.png)
+![The clock](image.png)
+
+![The clock hung](picture.png)
 
 ## Update Jun
 - had some stuff wired wrong, fixed and in the new version
